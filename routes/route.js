@@ -9,5 +9,6 @@ router.get('/', function (_, res) {
 });
 
 router.post('/users/register', apiHandlers.registerUser);
+router.get('/users', apiHandlers.getAllUsers);
 
 module.exports = router;

@@ -29,6 +29,31 @@ const registerUser = async (req, res) => {
   sendResponse(await postRequest(validatePayload));
 }
 
+const getAllUsers = async (req, res) => {
+  const { query } = req;
+
+  const payload = {
+    ...query
+  };
+
+  const validatePayload = validator.isValidPayload(payload, userPayloadModel.getAllValidate);
+
+  const postRequest = async (result) => {
+    if(result.err) {
+      return result;
+    }
+
+    return userDomain.getAllUsers(result.data);
+  };
+
+  const sendResponse = async (result) => {
+    (result.err) ? wrapper.response(res, 'fail', result)
+      : wrapper.response(res, 'success', result, result.message);
+  };
+  sendResponse(await postRequest(validatePayload));
+}
+
 module.exports = {
-  registerUser
+  registerUser,
+  getAllUsers
 };

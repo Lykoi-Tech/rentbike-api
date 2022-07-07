@@ -10,6 +10,21 @@ const registerUser = async (payload) => {
   return wrapper.data(query, 'Success Register User', 200);
 };
 
+const getAllUsers = async (payload) => {
+  const query = await mongodb.findMany({}, userCollection);
+  let result = [];
+
+  query.data.map((item) => {
+    result.push({
+      username: item.username,
+      email: item.email
+    });
+  });
+
+  return wrapper.data(result, 'success get all users', 200);
+};
+
 module.exports = {
-  registerUser
+  registerUser,
+  getAllUsers
 }
